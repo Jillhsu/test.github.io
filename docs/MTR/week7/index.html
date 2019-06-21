@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        
+        <title>Week7 hw1</title>
+        <style>
+            body {
+                width: 100%;
+                height: 500px;
+                margin: 0 auto;
+                text-align: center;
+            }
+            *:hover {
+                cursor: pointer;
+            }
+            .content {
+                margin-top: 300px;
+                font-size: 32px;
+            }
+            
+            button {
+                border-radius: 30px;
+            }  
+        
+        </style>
+        
+    </head>
+    <body>
+        <div class=main>
+        <div class="content">畫面變色時請點擊</div>
+        </div>
+        
+        <script>       
+
+        let timeStart = 0;
+        let timeEnd = 0;
+        let notYet = true;
+        let again = false;
+        let fail = false;
+        
+        function alertNotYet() {
+            alert("太早按了～失敗！請點擊再玩一次重來。");
+            fail = true;
+            if (!again) {
+                addBtn();
+            }
+            return;
+        }
+        
+        function addBtn() {
+            
+            again = true;
+            let btn = document.createElement("button");
+            btn.setAttribute("onclick", "window.location.reload();")
+            btn.setAttribute("accesskey", "")
+            //btn.addClass.add('btn');
+            btn.innerHTML = "再玩一次";
+            document.body.appendChild(btn);
+            
+            return;
+        }
+            
+        function playAgain() {
+            window.location.reload();
+            return;
+        }
+        
+        function alertTimmer() {
+            
+            timeEnd = new Date().getTime();
+            let responseTime = timeEnd - timeStart;
+            alert(responseTime/1000 + "sec");
+            if (!again) {
+                addBtn();
+            }
+        }
+        
+        function waitSecondRandom() {
+            // 隨機產生 1000-3000 數字,也就是 1~3 秒
+            return Math.floor(Math.random()*(3000-1000+1))+1000;
+        };
+        
+        function colorRandom() {
+            if (fail) {
+                return;
+            } else {
+                
+                var colorArr = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
+                var colorVal = "#";
+                for(i = 0; i < 6; i++) {
+                    colorVal += colorArr[Math.round(15*Math.random())];
+                }
+                document.querySelector('body').style['background']=colorVal;
+                notYet = false;
+                timeStart = new Date().getTime();
+                return;
+            }
+        }
+        function removeBtn() {
+            let element = document.body.querySelector('body');
+            element.removeChild('button');
+            // document.querySelector('body').removeChild(document.querySelector('button'));
+        }
+        
+        function play() {
+            
+            /*
+            let element = document.body.querySelector('body');
+            if (element.contains('button')) {
+                removeBtn();
+            }
+            */
+            document.querySelector('body').style['background'] = "#ffffff"; 
+            timeStart = 0;
+            timeEnd = 0;
+            notYet = true;
+            again = false;
+            let waitTime = waitSecondRandom();
+            setTimeout(colorRandom, waitTime);
+            
+            return;
+        }
+        
+        
+        document.querySelector('*').addEventListener('click', function() {
+            
+            if (notYet && !fail) {
+                alertNotYet();
+            } else {
+                if (!again) {
+                    alertTimmer();
+                }
+            }
+            
+            
+        }); 
+        
+        
+        play(); 
+               
+                                                                               
+        </script>
+        
+    
+    
+    </body>
+
+
+
+</html>
